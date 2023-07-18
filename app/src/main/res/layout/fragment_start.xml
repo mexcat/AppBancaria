@@ -115,6 +115,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_ingresar_saldo"
+                        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Agregar saldo"

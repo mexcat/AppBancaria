@@ -35,39 +35,46 @@ class StartFragment : Fragment() {
 
         binding.btnClose.setOnClickListener {
             when(binding.rgOpciones.checkedRadioButtonId){
-                R.id.rb_ver_saldo -> {
-                    binding.etvMonto.setText(monto.toString())
-                }
-                R.id.rb_ingresar_saldo -> {
-                    if(binding.etvMonto.text.toString() != "" && binding.etvMonto.text.toString().toInt() >0){
-                        monto += binding.etvMonto.text.toString().toInt()
-                        binding.etvMonto.text.clear()
-
-                    }else{
-                        Toast.makeText(context, "Debe ingresar un valor mayor a 0", Toast.LENGTH_LONG).show()
-                    }
-                }
-                R.id.rb_sacar_saldo ->{
-                    if(binding.etvMonto.text.toString() != "" && binding.etvMonto.text.toString().toInt() >0 ){
-                        if(binding.etvMonto.text.toString().toInt() <= monto){
-                            monto -= binding.etvMonto.text.toString().toInt()
-                            binding.etvMonto.text.clear()
-                        }else{
-                            Toast.makeText(context, "Debe retirar un monto menor al que tiene.", Toast.LENGTH_LONG).show()
-                        }
-                    }else{
-                        Toast.makeText(context, "Debe ingresar un valor mayor a 0.", Toast.LENGTH_LONG).show()
-                    }
-                }
-                R.id.rb_salir -> {
-                    requireParentFragment().activity?.finish()
-                }
+                R.id.rb_ver_saldo -> showBalance()
+                R.id.rb_ingresar_saldo -> addBalance()
+                R.id.rb_sacar_saldo -> restBalance()
+                R.id.rb_salir -> requireParentFragment().activity?.finish()
             }
         }
 
         return binding.root
     }
 
+    private fun restBalance() {
+        var cantidad = binding.etvMonto.text
+        if(cantidad.toString() != "" && cantidad.toString().toInt() >0 ){
+            if(cantidad.toString().toInt() <= monto){
+                monto -= cantidad.toString().toInt()
+                cantidad.clear()
+            }else{
+                showToast("Debe retirar un monto menor al que tiene.")
+            }
+        }else{
+            showToast( "Debe ingresar un valor mayor a 0.")
+        }
+    }
+
+    private fun addBalance() {
+        var cantidad = binding.etvMonto.text
+        if(cantidad.toString() != "" && cantidad.toString().toInt() >0){
+            monto += cantidad.toString().toInt()
+            cantidad.clear()
+        }else{
+            showToast("Debe ingresar un valor mayor a 0")
+        }
+    }
+
+    private fun showBalance(){
+        binding.etvMonto.setText(monto.toString())
+    }
+    private fun showToast(string: String){
+        Toast.makeText(context, string, Toast.LENGTH_LONG).show()
+    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
