@@ -41,6 +41,8 @@ class StartFragment : Fragment() {
                 R.id.rb_ingresar_saldo -> {
                     if(binding.etvMonto.text.toString() != "" && binding.etvMonto.text.toString().toInt() >0){
                         monto += binding.etvMonto.text.toString().toInt()
+                        binding.etvMonto.text.clear()
+
                     }else{
                         Toast.makeText(context, "Debe ingresar un valor mayor a 0", Toast.LENGTH_LONG).show()
                     }
@@ -49,6 +51,7 @@ class StartFragment : Fragment() {
                     if(binding.etvMonto.text.toString() != "" && binding.etvMonto.text.toString().toInt() >0 ){
                         if(binding.etvMonto.text.toString().toInt() <= monto){
                             monto -= binding.etvMonto.text.toString().toInt()
+                            binding.etvMonto.text.clear()
                         }else{
                             Toast.makeText(context, "Debe retirar un monto menor al que tiene.", Toast.LENGTH_LONG).show()
                         }
